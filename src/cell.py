@@ -6,18 +6,18 @@ class Cell:
         self.has_right_wall = True
         self.has_top_wall = True
         self.has_bottom_wall = True
-        self.__x1 = x1
-        self.__y1 = y1
-        self.__x2 = x2
-        self.__y2 = y2
+        self.x1 = x1
+        self.y1 = y1
+        self.x2 = x2
+        self.y2 = y2
         self.__win = win
-        self.center = ((self.__x1 + self.__x2) / 2, (self.__y1 + self.__y2) / 2)
+        self.center = ((self.x1 + self.x2) / 2, (self.y1 + self.y2) / 2)
     
     def draw(self, fill_color):
-        top_left = (self.__x1, self.__y1)
-        bottom_right = (self.__x2, self.__y2)
-        top_right = (self.__x2, self.__y1)
-        bottom_left = (self.__x1, self.__y2)
+        top_left = (self.x1, self.y1)
+        bottom_right = (self.x2, self.y2)
+        top_right = (self.x2, self.y1)
+        bottom_left = (self.x1, self.y2)
 
         if self.has_left_wall:
             line = Line(Point(top_left[0], top_left[1]), Point(bottom_left[0], bottom_left[1]))
