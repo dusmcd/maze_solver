@@ -10,33 +10,33 @@ class Maze:
             num_cols,
             cell_size_x,
             cell_size_y,
-            win
+            win=None
     ):
-        self.x1 = x1
-        self.y1 = y1
-        self.num_rows = num_rows
-        self.num_cols = num_cols
-        self.cell_size_x = cell_size_x
-        self.cell_size_y = cell_size_y
+        self.__x1 = x1
+        self.__y1 = y1
+        self.__num_rows = num_rows
+        self.__num_cols = num_cols
+        self.__cell_size_x = cell_size_x
+        self.__cell_size_y = cell_size_y
         self.__win = win
         self.__cells = []
         self.__create_cells()
 
     def __create_cells(self):
-        for row in range(self.num_rows):
+        for row in range(self.__num_rows):
             column = []
-            for col in range(self.num_cols):
+            for col in range(self.__num_cols):
                 cell = self.__draw_cell(row, col)
                 column.append(cell)
             self.__cells.append(column)
 
     def __draw_cell(self, i, j):
-        maze_start = (self.x1, self.y1)
-        top_left = (maze_start[0] + j * self.cell_size_x,
-                     maze_start[1] + i * self.cell_size_y
+        maze_start = (self.__x1, self.__y1)
+        top_left = (maze_start[0] + j * self.__cell_size_x,
+                     maze_start[1] + i * self.__cell_size_y
                     )
-        bottom_right = (maze_start[0] + j * self.cell_size_x + self.cell_size_x,
-                         maze_start[1] + i * self.cell_size_y + self.cell_size_y
+        bottom_right = (maze_start[0] + j * self.__cell_size_x + self.__cell_size_x,
+                         maze_start[1] + i * self.__cell_size_y + self.__cell_size_y
                         )
         cell = Cell(top_left[0], top_left[1], bottom_right[0], bottom_right[1], self.__win)
         cell.draw("black")
@@ -44,5 +44,9 @@ class Maze:
         return cell
 
     def __animate(self):
-        self.__win.redraw()
+        if self.__win:
+            self.__win.redraw()
         time.sleep(0.05)
+
+    def get_cells(self):
+        return self.__cells
