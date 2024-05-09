@@ -16,6 +16,15 @@ class MazeTest(unittest.TestCase):
             cells = maze.get_cells()
             self.assertEqual(expected_cols, len(cells[0]))
             self.assertEqual(expected_rows, len(cells))
+    
+    def test_break_entrance_and_exit(self):
+        for test_case in test_cases:
+            maze = test_case[0]
+            cells = maze.get_cells()
+            entrance = cells[0][0]
+            exit = cells[maze.get_num_rows() - 1][maze.get_num_cols() - 1]
+            self.assertEqual(entrance.has_left_wall, False)
+            self.assertEqual(exit.has_right_wall, False)
 
 
 if __name__ == "__main__":

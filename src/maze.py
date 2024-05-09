@@ -21,6 +21,7 @@ class Maze:
         self.__win = win
         self.__cells = []
         self.__create_cells()
+        self.__break_entrance_and_exit()
 
     def __create_cells(self):
         for row in range(self.__num_rows):
@@ -39,8 +40,9 @@ class Maze:
                          maze_start[1] + i * self.__cell_size_y + self.__cell_size_y
                         )
         cell = Cell(top_left[0], top_left[1], bottom_right[0], bottom_right[1], self.__win)
-        cell.draw("black")
-        self.__animate()
+        if self.__win:
+            cell.draw("black")
+            self.__animate()
         return cell
 
     def __animate(self):
@@ -50,3 +52,18 @@ class Maze:
 
     def get_cells(self):
         return self.__cells
+    
+    def get_num_cols(self):
+        return self.__num_cols
+    
+    def get_num_rows(self):
+        return self.__num_rows
+
+    def __break_entrance_and_exit(self):
+        entrance = self.__cells[0][0]
+        exit = self.__cells[self.__num_rows - 1][self.__num_cols - 1]
+        entrance.has_left_wall = False
+        exit.has_right_wall = False
+        if self.__win:
+            entrance.draw("black")
+            exit.draw("black")

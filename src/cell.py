@@ -19,22 +19,28 @@ class Cell:
         top_right = (self.__x2, self.__y1)
         bottom_left = (self.__x1, self.__y2)
 
+        left = Line(Point(top_left[0], top_left[1]), Point(bottom_left[0], bottom_left[1]))
+        top = Line(Point(top_left[0], top_left[1]), Point(top_right[0], top_right[1]))
+        right = Line(Point(top_right[0], top_right[1]), Point(bottom_right[0], bottom_right[1]))
+        bottom = Line(Point(bottom_right[0], bottom_right[1]), Point(bottom_left[0], bottom_left[1]))
+
+
         if self.has_left_wall:
-            line = Line(Point(top_left[0], top_left[1]), Point(bottom_left[0], bottom_left[1]))
-            if self.__win:
-                self.__win.draw_line(line, fill_color)
+            self.__win.draw_line(left, fill_color)
+        else:
+            self.__win.draw_line(left, "#d9d9d9")
         if self.has_top_wall:
-            line = Line(Point(top_left[0], top_left[1]), Point(top_right[0], top_right[1]))
-            if self.__win:
-                self.__win.draw_line(line, fill_color)
+            self.__win.draw_line(top, fill_color)
+        else:
+            self.__win.draw_line(top, "#d9d9d9")
         if self.has_right_wall:
-            line = Line(Point(top_right[0], top_right[1]), Point(bottom_right[0], bottom_right[1]))
-            if self.__win:
-                self.__win.draw_line(line, fill_color)
+            self.__win.draw_line(right, fill_color)
+        else:
+            self.__win.draw_line(right, "#d9d9d9")
         if self.has_bottom_wall:
-            line = Line(Point(bottom_right[0], bottom_right[1]), Point(bottom_left[0], bottom_left[1]))
-            if self.__win:
-                self.__win.draw_line(line, fill_color)
+            self.__win.draw_line(bottom, fill_color)
+        else:
+            self.__win.draw_line(bottom, "#d9d9d9")
 
     def draw_move(self, to_cell, undo=False):
         line = Line(Point(self.center[0], self.center[1]), Point(to_cell.center[0], to_cell.center[1]))
