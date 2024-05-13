@@ -25,6 +25,17 @@ class MazeTest(unittest.TestCase):
             exit = cells[maze.get_num_rows() - 1][maze.get_num_cols() - 1]
             self.assertEqual(entrance.has_left_wall, False)
             self.assertEqual(exit.has_right_wall, False)
+    
+    def test_reset_cells(self):
+        for test_case in test_cases:
+            maze = test_case[0]
+            cells = maze.get_cells()
+            number_visited = 0
+            for row in range(maze.get_num_rows()):
+                for col in range(maze.get_num_cols()):
+                    if cells[row][col].visited:
+                        number_visited += 1
+            self.assertEqual(0, number_visited)
 
 
 if __name__ == "__main__":

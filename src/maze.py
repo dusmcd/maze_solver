@@ -1,5 +1,7 @@
 from cell import Cell
 import time
+import random
+import math
 
 class Maze:
     def __init__(
@@ -10,7 +12,8 @@ class Maze:
             num_cols,
             cell_size_x,
             cell_size_y,
-            win=None
+            win=None,
+            seed=None
     ):
         self.__x1 = x1
         self.__y1 = y1
@@ -22,6 +25,9 @@ class Maze:
         self.__cells = []
         self.__create_cells()
         self.__break_entrance_and_exit()
+        random.seed(seed)
+        self.__break_walls_r(0, 0)
+        self.__reset_cells_visited()
 
     def __create_cells(self):
         for row in range(self.__num_rows):
@@ -67,3 +73,49 @@ class Maze:
         if self.__win:
             entrance.draw("black")
             exit.draw("black")
+
+
+    def __break_walls_r(self, i, j):
+        current_cell = self.__cells[i][j]
+        current_cell.visited = True
+        while True:
+            possible_directions = []
+            if j + 1 < self.__num_cols and not self.__cells[i][j + 1].visited:
+                possible_directions.append((i, j + 1))
+            if j - 1 > 0 and not self.__cells[i][j - 1].visited:
+                possible_directions.append((i, j - 1))
+            if i + 1 < self.__num_rows and not self.__cells[i + 1][j].visited:
+                possible_directions.append((i + 1, j))
+            if i - 1 > 0 and not self.__cells[i - 1][j].visited:
+                possible_directions.append((i - 1, j))
+            
+            if len(possible_directions) == 0:
+                if self.__win:
+                    current_cell.draw("black")
+                return
+            direction = math.floor(random.random() * len(possible_directions))
+            next_cell = self.__cells[possible_directions[direction][0]][possible_directions[direction][1]]
+
+            if possible_directions[direction][0] < i:
+                current_cell.has_top_wall = False
+                next_cell.has_bottom_wall = False
+            elif possible_directions[direction][0] > i:
+                current_cell.has_bottom_wall = False
+                next_cell.has_top_wall = False
+            elif possible_directions[direction][1] < j:
+                current_cell.has_left_wall = False
+                next_cell.has_right_wall = False
+            else:
+                current_cell.has_right_wall = False
+                next_cell.has_left_wall = False
+            if self.__win:
+                current_cell.draw("black")
+                next_cell.draw("black")
+                self.__animate()
+
+            self.__break_walls_r(possible_directions[direction][0], possible_directions[direction][1])
+    
+    def __reset_cells_visited(self):
+        for row in range(self.__num_rows):
+            for col in range(self.__num_cols):
+                self.__cells[row][col].visited = False

@@ -12,6 +12,7 @@ class Cell:
         self.__y2 = y2
         self.__win = win
         self.center = ((self.__x1 + self.__x2) / 2, (self.__y1 + self.__y2) / 2)
+        self.visited = False
     
     def draw(self, fill_color):
         top_left = (self.__x1, self.__y1)
