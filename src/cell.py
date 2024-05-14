@@ -45,5 +45,5 @@ class Cell:
 
     def draw_move(self, to_cell, undo=False):
         line = Line(Point(self.center[0], self.center[1]), Point(to_cell.center[0], to_cell.center[1]))
-        fill_color = "red" if not undo else "gray"
+        fill_color = "red" if not undo else "#d9d9d9"
         self.__win.draw_line(line, fill_color)
